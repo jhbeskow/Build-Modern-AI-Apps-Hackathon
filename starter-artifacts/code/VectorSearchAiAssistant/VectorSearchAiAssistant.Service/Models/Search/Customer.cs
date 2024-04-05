@@ -14,21 +14,21 @@ namespace VectorSearchAiAssistant.Service.Models.Search
         [SimpleField]
         [EmbeddingField(Label = "Customer title")]
         public string title { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer first name")]
         public string firstName { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer last name")]
         public string lastName { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer email address")]
         public string emailAddress { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer phone number")]
         public string phoneNumber { get; set; }
-        [SimpleField]
+        [SearchableField]
         public string creationDate { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer addresses")]
         public List<CustomerAddress> addresses { get; set; }
         [SimpleField(IsHidden = true)]
@@ -72,22 +72,22 @@ namespace VectorSearchAiAssistant.Service.Models.Search
 
     public class CustomerAddress
     {
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address line 1")]
         public string addressLine1 { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address line 2")]
         public string addressLine2 { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address city")]
         public string city { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address state")]
         public string state { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address country")]
         public string country { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Customer address zip code")]
         public string zipCode { get; set; }
         [SimpleField]
