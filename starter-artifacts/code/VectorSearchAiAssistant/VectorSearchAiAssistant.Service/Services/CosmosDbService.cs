@@ -123,18 +123,19 @@ namespace VectorSearchAiAssistant.Service.Services
             {
                 // TODO: Create a change feed processor that listens for new JsonDocument instances added to the tracked containers.
                 // Note that the function GenericChangeFeedHandler has been started for you below.
-                //foreach (string __ in ____.Split(',').Select(s => s.Trim()))
-                //{
-                //    var changeFeedProcessor = _containers[__]
-                //        .GetChangeFeedProcessorBuilder<dynamic>($"{__}ChangeFeed", GenericChangeFeedHandler)
-                //        .WithInstanceName($"{__}ChangeInstance")
-                //        .WithErrorNotification(GenericChangeFeedErrorHandler)
-                //        .WithLeaseContainer(_leases)
-                //        .Build();
-                //    await changeFeedProcessor.StartAsync();
-                //    _changeFeedProcessors.Add(changeFeedProcessor);
-                //    _logger.LogInformation($"Initialized the change feed processor for the {__} container.");
-                //}
+                foreach (string __ in _settings.Containers.Split(',').Select(s => s.Trim()))
+                {
+                    var changeFeedProcessor = _containers[__]
+                        .GetChangeFeedProcessorBuilder<dynamic>($"{__}ChangeFeed", GenericChangeFeedHandler)
+                        .WithInstanceName($"{__}ChangeInstance")
+                        .WithErrorNotification(GenericChangeFeedErrorHandler)
+                        .WithLeaseContainer(_leases)
+                        .WithStartTime(DateTime.MinValue.ToUniversalTime())
+                        .Build();
+                    await changeFeedProcessor.StartAsync();
+                    _changeFeedProcessors.Add(changeFeedProcessor);
+                    _logger.LogInformation($"Initialized the change feed processor for the {__} container.");
+                }
 
                 // NOTE: Add .WithStartTime(DateTime.MinValue.ToUniversalTime()) above (before .Build()) to ensure the 
                 // change feed will process data from the begining of the container's lifetime.
@@ -188,15 +189,18 @@ namespace VectorSearchAiAssistant.Service.Services
 
                         // Add the entity to the Cognitive Search content index
                         // The content index is used by the Cognitive Search memory source to run create memories from faceted queries
-                        //await _cognitiveSearchService.{__}(entity);
+                        await _cognitiveSearchService.IndexItem(entity);
 
                         // Add the entity to the Semantic Kernel memory used by the RAG service
                         // We want to keep the VectorSearchAiAssistant.SemanticKernel project isolated from any domain-specific
                         // references/dependencies, so we use a generic mechanism to get the name of the entity as well as to 
                         // set the vector property on the entity.
-                        //await _ragService.{__}(
-                        //    entity,
-                        //    string.Join(" ", entity.GetPropertyValues(typeMetadata.NamingProperties)));
+                        await _ragService.AddMemory
+                        (
+                            entity,
+                            string.Join(" ", entity.GetPropertyValues(typeMetadata.NamingProperties))
+                        );
+                        
                     }
                 }
                 catch (Exception ex)
