@@ -195,12 +195,9 @@ namespace VectorSearchAiAssistant.Service.Services
                         // We want to keep the VectorSearchAiAssistant.SemanticKernel project isolated from any domain-specific
                         // references/dependencies, so we use a generic mechanism to get the name of the entity as well as to 
                         // set the vector property on the entity.
-                        await _ragService.AddMemory
-                        (
-                            entity,
-                            string.Join(" ", entity.GetPropertyValues(typeMetadata.NamingProperties))
-                        );
-                        
+                        await _ragService.AddMemory(
+                           entity,
+                           string.Join(" ", entity.GetPropertyValues(typeMetadata.NamingProperties)));
                     }
                 }
                 catch (Exception ex)

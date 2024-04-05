@@ -116,8 +116,8 @@ public class ChatService : IChatService
             // The parameters marked with __ are the one that should be replaced:
             //      var promptMessage = new Message(sessionId, __, __, __, __, null);
             //      var completionMessage = new Message(sessionId, __, __, __, null, null);
-            var promptMessage = new Message(sessionId, "", 0, "", null, null);
-            var completionMessage = new Message(sessionId, "", 0, "", null, null);
+            var promptMessage = new Message(sessionId, nameof(Participants.User), result.UserPromptTokens, result.UserPrompt, null, null);
+            var completionMessage = new Message(sessionId, nameof(Participants.User), result.ResponseTokens, result.Completion, null, null);
 
             var completionPrompt = new CompletionPrompt(sessionId, completionMessage.Id, result.UserPrompt);
             completionMessage.CompletionPromptId = completionPrompt.Id;

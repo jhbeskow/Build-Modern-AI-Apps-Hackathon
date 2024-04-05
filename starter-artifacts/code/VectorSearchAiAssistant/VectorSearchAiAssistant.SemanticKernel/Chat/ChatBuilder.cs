@@ -101,17 +101,17 @@ namespace VectorSearchAiAssistant.SemanticKernel.Chat
              */
             if (_memories.Count > 0)
             {
-                //var memoriesPrompt = ____
-                //systemMessage = $"____".NormalizeLineEndings();
+                var memoriesPrompt = JsonConvert.SerializeObject(_memories);
+                systemMessage = memoriesPrompt.NormalizeLineEndings();
             }
 
             // TODO: add the non-empty or non-null systemMessage to the chatHistory
-            //if (!string.IsNullOrWhiteSpace(systemMessage))
-            //  result.
+            if (!string.IsNullOrWhiteSpace(systemMessage))
+                result.AddSystemMessage(systemMessage);
 
             //TODO: Add each system message to the history
-            //foreach (var __ in ____)
-            //    result.AddMessage(message.__, message.__);
+            foreach (var message in _messages)
+                result.AddMessage(message.AuthorRole, message.Content);
 
             return result;
         }
