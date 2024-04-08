@@ -15,16 +15,16 @@ namespace VectorSearchAiAssistant.Service.Models.Search
         [SimpleField]
         [EmbeddingField(Label = "Product stock keeping unit (SKU)")]
         public string sku { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Product name")]
         public string name { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Product description")]
         public string description { get; set; }
         [SimpleField]
         [EmbeddingField(Label = "Product price")]
         public double price { get; set; }
-        [SimpleField]
+        [SearchableField]
         [EmbeddingField(Label = "Product tags")]
         public List<Tag> tags { get; set; }
 
