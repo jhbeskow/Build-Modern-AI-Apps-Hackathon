@@ -117,7 +117,7 @@ public class ChatService : IChatService
             //      var promptMessage = new Message(sessionId, __, __, __, __, null);
             //      var completionMessage = new Message(sessionId, __, __, __, null, null);
             var promptMessage = new Message(sessionId, nameof(Participants.User), result.UserPromptTokens, result.UserPrompt, null, null);
-            var completionMessage = new Message(sessionId, nameof(Participants.User), result.ResponseTokens, result.Completion, null, null);
+            var completionMessage = new Message(sessionId, nameof(Participants.Assistant), result.ResponseTokens, result.Completion, null, null);
 
             var completionPrompt = new CompletionPrompt(sessionId, completionMessage.Id, result.UserPrompt);
             completionMessage.CompletionPromptId = completionPrompt.Id;
