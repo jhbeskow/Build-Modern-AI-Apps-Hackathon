@@ -177,34 +177,34 @@ public class SemanticKernelRAGService : IRAGService
          * Uncomment and complete the following chain to add the
          * SystemPrompt, Memories, and MessageHistory in the correct order.
          */
-        //var chatHistory = chatBuilder
-        //    .With_____(
-        //        await _systemPromptService.GetPrompt(_settings.OpenAI.ChatCompletionPromptName))
-        //    .With_____(
-        //        memoryCollection)
-        //    .With_____(
-        //        messageHistory.Select(m => (new AuthorRole(m.Sender.ToLower()), m.Text.NormalizeLineEndings())).ToList())
-        //    .Build();
+        var chatHistory = chatBuilder
+            .WithSystemPrompt(
+                await _systemPromptService.GetPrompt(_settings.OpenAI.ChatCompletionPromptName))
+            .WithMemories(
+                memoryCollection)
+            .WithMessageHistory(
+                messageHistory.Select(m => (new AuthorRole(m.Sender.ToLower()), m.Text.NormalizeLineEndings())).ToList())
+            .Build();
 
-        //chatHistory.AddUserMessage(userPrompt);
+        chatHistory.AddUserMessage(userPrompt);
 
         /* TODO: 
          * Get the ChatCompletionService
          * Invoke the GetChatCompletions method asynchronously 
          */
 
-        //var chat = _semanticKernel.GetService<IChatCompletion>();
-        //var completionResults = await chat.GetChatCompletionsAsync(chatHistory);
+        var chat = _semanticKernel.GetService<IChatCompletion>();
+        var completionResults = await chat.GetChatCompletionsAsync(chatHistory);
 
         // TODO: Get the first completionResults and retrieve the ChatMessage from that
-        //var reply = await ______[0]._______();
+        var reply = await completionResults[0].GetChatMessageAsync();
 
         // TODO: Extract the OpenAIChatResult to get to the prompt and completion token counts
-        //var rawResult = (completionResults[0] as ITextResult).ModelResult.GetOpenAIChatResult();
+        var rawResult = (completionResults[0] as ITextResult).ModelResult.GetOpenAIChatResult();
 
         //TODO: Replace the following return value with the correct values according to function signature
         // (all default values below should be replaced).
-        return new("", "", 0, 0, null);
+        return new(rawResult.Choice.Message.Content, userPrompt, rawResult.Usage.PromptTokens, rawResult.Usage.CompletionTokens, userPromptEmbedding);
     }
 
     public async Task<string> Summarize(string sessionId, string userPrompt)
