@@ -47,6 +47,15 @@ namespace VectorSearchAiAssistant.Service.Models
                         TypeMatchingProperties = new List<string> { "memory__" },
                         NamingProperties = new List<string>()
                     }
+                },
+                {
+                    nameof(Store),
+                    new ModelRegistryEntry
+                    {
+                        Type = typeof(Store),
+                        TypeMatchingProperties = new List<string> { "storeName" },
+                        NamingProperties = new List<string>() { "storeName" }
+                    }
                 }
             };
 

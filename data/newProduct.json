@@ -1,0 +1,157 @@
+[
+    {
+        "id": "E2F71132-7D2E-4C8B-A6A5-1E3D1A2B35B4",
+        "categoryId": "C80E3277-604C-4C6D-85AE-FCB237C08751",
+        "categoryName": "Components, Wheels",
+        "sku": "FW-R488",
+        "name": "RL Ridgeback Front Wheel",
+        "description": "A rugged front wheel designed for the challenges of off-road cycling, the RL Ridgeback combines durability with performance.",
+        "price": 225.50,
+        "tags": [
+            {
+                "id": "0573D684-9140-4DEE-89AF-4E4A90E65666",
+                "name": "Tag-113"
+            },
+            {
+                "id": "069169DD-F4B3-4769-8841-13B5FF745932",
+                "name": "Tag-157"
+            },
+            {
+                "id": "2901FEF6-491C-40F5-B2CE-ECF80735BE5D",
+                "name": "Tag-159"
+            },
+            {
+                "id": "319E277F-6B7A-483D-81BA-1EC34CC700EB",
+                "name": "Tag-163"
+            },
+            {
+                "id": "B805F2EF-E936-4A6E-8DBB-0543A8C4F949",
+                "name": "Tag-183"
+            }
+        ]
+    },
+    {
+        "id": "5F2C4D72-8E6E-48A1-8C76-8144226342D3",
+        "categoryId": "C80E3277-604C-4C6D-85AE-FCB237C08751",
+        "categoryName": "Components, Wheels",
+        "sku": "FW-X920",
+        "name": "XG Crossway Front Wheel",
+        "description": "Designed for cross-country adventures, the XG Crossway Front Wheel features an advanced alloy composition for superior performance.",
+        "price": 245.99,
+        "tags": [
+            {
+                "id": "0573D684-9140-4DEE-89AF-4E4A90E65666",
+                "name": "Tag-113"
+            },
+            {
+                "id": "069169DD-F4B3-4769-8841-13B5FF745932",
+                "name": "Tag-157"
+            },
+            {
+                "id": "2901FEF6-491C-40F5-B2CE-ECF80735BE5D",
+                "name": "Tag-159"
+            },
+            {
+                "id": "319E277F-6B7A-483D-81BA-1EC34CC700EB",
+                "name": "Tag-163"
+            },
+            {
+                "id": "B805F2EF-E936-4A6E-8DBB-0543A8C4F949",
+                "name": "Tag-183"
+            }
+        ]
+    },
+    {
+        "id": "A7B1C437-EBF1-4B4E-8C34-6C6E8D1A4A21",
+        "categoryId": "C80E3277-604C-4C6D-85AE-FCB237C08751",
+        "categoryName": "Components, Wheels",
+        "sku": "FW-H356",
+        "name": "Highlander Mountain Front Wheel",
+        "description": "The Highlander Mountain Front Wheel is engineered for the extreme demands of mountain biking, offering unmatched stability and control.",
+        "price": 269.99,
+        "tags": [
+            {
+                "id": "0573D684-9140-4DEE-89AF-4E4A90E65666",
+                "name": "Tag-113"
+            },
+            {
+                "id": "069169DD-F4B3-4769-8841-13B5FF745932",
+                "name": "Tag-157"
+            },
+            {
+                "id": "2901FEF6-491C-40F5-B2CE-ECF80735BE5D",
+                "name": "Tag-159"
+            },
+            {
+                "id": "319E277F-6B7A-483D-81BA-1EC34CC700EB",
+                "name": "Tag-163"
+            },
+            {
+                "id": "B805F2EF-E936-4A6E-8DBB-0543A8C4F949",
+                "name": "Tag-183"
+            }
+        ]
+    },
+    {
+        "id": "3D2C034F-1E3E-4140-B256-20F8B0A8B1A2",
+        "categoryId": "C80E3277-604C-4C6D-85AE-FCB237C08751",
+        "categoryName": "Components, Wheels",
+        "sku": "FW-T501",
+        "name": "Trailblazer MTB Front Wheel",
+        "description": "The Trailblazer MTB Front Wheel is specifically designed for trail riding, offering robust construction and optimal performance.",
+        "price": 199.75,
+        "tags": [
+            {
+                "id": "0573D684-9140-4DEE-89AF-4E4A90E65666",
+                "name": "Tag-113"
+            },
+            {
+                "id": "069169DD-F4B3-4769-8841-13B5FF745932",
+                "name": "Tag-157"
+            },
+            {
+                "id": "2901FEF6-491C-40F5-B2CE-ECF80735BE5D",
+                "name": "Tag-159"
+            },
+            {
+                "id": "319E277F-6B7A-483D-81BA-1EC34CC700EB",
+                "name": "Tag-163"
+            },
+            {
+                "id": "B805F2EF-E936-4A6E-8DBB-0543A8C4F949",
+                "name": "Tag-183"
+            }
+        ]
+    },
+    {
+        "id": "BBF30FDE-AFDF-4BFC-8D07-2E3D449B8A9E",
+        "categoryId": "C80E3277-604C-4C6D-85AE-FCB237C08751",
+        "categoryName": "Components, Wheels",
+        "sku": "FW-G780",
+        "name": "Gravity Enduro Front Wheel",
+        "description": "Crafted for downhill and enduro racing, the Gravity Enduro Front Wheel combines high strength with lightweight design for competitive performance.",
+        "price": 289.95,
+        "tags": [
+            {
+                "id": "0573D684-9140-4DEE-89AF-4E4A90E65666",
+                "name": "Tag-113"
+            },
+            {
+                "id": "069169DD-F4B3-4769-8841-13B5FF745932",
+                "name": "Tag-157"
+            },
+            {
+                "id": "2901FEF6-491C-40F5-B2CE-ECF80735BE5D",
+                "name": "Tag-159"
+            },
+            {
+                "id": "319E277F-6B7A-483D-81BA-1EC34CC700EB",
+                "name": "Tag-163"
+            },
+            {
+                "id": "B805F2EF-E936-4A6E-8DBB-0543A8C4F949",
+                "name": "Tag-183"
+            }
+        ]
+    }
+]

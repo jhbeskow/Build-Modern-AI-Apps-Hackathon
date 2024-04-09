@@ -1,0 +1,50 @@
+[
+    {
+        "storeName": "CosmicWorks Central Station",
+        "address": {
+            "addressLine1": "100 Infinity Loop",
+            "addressLine2": "",
+            "state": "NY",
+            "country": "USA",
+            "zipCode": "10001",
+            "location": {
+                "type": "Point",
+                "coordinates": [-73.935242, 40.730610]
+            }
+        },
+        "emailAddress": "central@cosmicworks.com",
+        "phoneNumber": "+1-555-0100"
+    },
+    {
+        "storeName": "CosmicWorks Harbor View",
+        "address": {
+            "addressLine1": "500 Seaside Boulevard",
+            "addressLine2": "",
+            "state": "CA",
+            "country": "USA",
+            "zipCode": "90002",
+            "location": {
+                "type": "Point",
+                "coordinates": [-118.491191, 34.019454]
+            }
+        },
+        "emailAddress": "harbor@cosmicworks.com",
+        "phoneNumber": "+1-555-0200"
+    },
+    {
+        "storeName": "CosmicWorks Mountain Edge",
+        "address": {
+            "addressLine1": "2500 Summit Ridge",
+            "addressLine2": "",
+            "state": "CO",
+            "country": "USA",
+            "zipCode": "80014",
+            "location": {
+                "type": "Point",
+                "coordinates": [-104.990251, 39.739236]
+            }
+        },
+        "emailAddress": "mountain@cosmicworks.com",
+        "phoneNumber": "+1-555-0300"
+    }
+]
