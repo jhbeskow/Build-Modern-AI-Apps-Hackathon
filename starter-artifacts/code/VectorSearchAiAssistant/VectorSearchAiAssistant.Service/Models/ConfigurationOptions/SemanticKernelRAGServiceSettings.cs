@@ -12,6 +12,7 @@ namespace VectorSearchAiAssistant.Service.Models.ConfigurationOptions
             public required int EmbeddingsDeploymentMaxTokens { get; init; }
             public required string ChatCompletionPromptName { get; init; }
             public required string ShortSummaryPromptName { get; init; }
+            public required string ShakespearePromptName { get; init; }
             public required PromptOptimizationSettings PromptOptimization { get; init; }
             public required string Endpoint { get; init; }
             public required string Key { get; init; }

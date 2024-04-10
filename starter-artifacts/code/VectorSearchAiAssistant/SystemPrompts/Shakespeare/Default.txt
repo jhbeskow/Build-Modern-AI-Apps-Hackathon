@@ -1,0 +1,7 @@
+BEGIN CONTENT TO TRANSLATE:
+{{$INPUT}}
+
+END CONTENT TO TRANSLATE.
+
+Translate the text in 'CONTENT TO TRANSLATE' into a Shakespearean poem. The translationg should be written in iambic pentameter.
+

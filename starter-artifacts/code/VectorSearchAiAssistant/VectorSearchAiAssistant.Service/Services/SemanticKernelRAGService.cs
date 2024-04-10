@@ -5,11 +5,13 @@ using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.AI.TextCompletion;
 using Microsoft.SemanticKernel.Connectors.Memory.AzureCognitiveSearch;
+using Microsoft.SemanticKernel.Planners;
 using Microsoft.SemanticKernel.Plugins.Memory;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using VectorSearchAiAssistant.SemanticKernel.Chat;
 using VectorSearchAiAssistant.SemanticKernel.Plugins.Core;
+using VectorSearchAiAssistant.SemanticKernel.Plugins.Fun;
 using VectorSearchAiAssistant.SemanticKernel.Plugins.Memory;
 using VectorSearchAiAssistant.SemanticKernel.Text;
 using VectorSearchAiAssistant.Service.Interfaces;
@@ -158,8 +160,28 @@ public class SemanticKernelRAGService : IRAGService
             0.8,
             _settings.CognitiveSearch.MaxVectorSearchResults);
 
-        // Read the resulting user prompt embedding as soon as possible
         var userPromptEmbedding = memoryPlugin.LastInputTextEmbedding?.ToArray();
+
+        if (userPrompt.ToLower().Contains("policy"))
+        {
+            var policyPlugin = new PolicyPlugin(
+            _shortTermMemory,
+            _logger);
+            _semanticKernel.ImportFunctions(policyPlugin);
+
+            var prompt = "BEGIN CONTENT TO TRANSLATE:\r\n{{$INPUT}}\r\n\r\nEND CONTENT TO TRANSLATE.\r\n\r\nTranslate the text in 'CONTENT TO TRANSLATE' into a Shakespearean poem. The translationg should be written in iambic pentameter.";
+            var shakespearePlugin = new ShakespearePlugin(
+                prompt,
+                500,
+                _semanticKernel);
+            //_semanticKernel.ImportFunctions(shakespearePlugin);
+
+            var pplanner = new SequentialPlanner(_semanticKernel);
+            var pplan = await pplanner.CreatePlanAsync(userPrompt);
+            var pplanResult = await _semanticKernel.RunAsync(pplan);
+
+            return new(pplanResult.GetValue<string>(), userPrompt, 0, 0, userPromptEmbedding);
+        }
 
         List<string> memoryCollection;
         if (string.IsNullOrEmpty(memories))
@@ -186,25 +208,22 @@ public class SemanticKernelRAGService : IRAGService
                 messageHistory.Select(m => (new AuthorRole(m.Sender.ToLower()), m.Text.NormalizeLineEndings())).ToList())
             .Build();
 
-        chatHistory.AddUserMessage(userPrompt);
-
         /* TODO: 
          * Get the ChatCompletionService
          * Invoke the GetChatCompletions method asynchronously 
          */
 
+        var history = chatHistory.ToString();
         var chat = _semanticKernel.GetService<IChatCompletion>();
-        var completionResults = await chat.GetChatCompletionsAsync(chatHistory);
 
-        // TODO: Get the first completionResults and retrieve the ChatMessage from that
-        var reply = await completionResults[0].GetChatMessageAsync();
+        var completionPlugin = new RetailAssistancePlugin(chat, chatHistory, _logger);
+        _semanticKernel.ImportFunctions(completionPlugin);
+        var planner = new SequentialPlanner(_semanticKernel);
+        var plan = await planner.CreatePlanAsync(userPrompt);
+        var planResult = await _semanticKernel.RunAsync(plan);
 
-        // TODO: Extract the OpenAIChatResult to get to the prompt and completion token counts
-        var rawResult = (completionResults[0] as ITextResult).ModelResult.GetOpenAIChatResult();
+        return new(planResult.GetValue<string>(), userPrompt, 0, 0, userPromptEmbedding);
 
-        //TODO: Replace the following return value with the correct values according to function signature
-        // (all default values below should be replaced).
-        return new(rawResult.Choice.Message.Content, userPrompt, rawResult.Usage.PromptTokens, rawResult.Usage.CompletionTokens, userPromptEmbedding);
     }
 
     public async Task<string> Summarize(string sessionId, string userPrompt)
