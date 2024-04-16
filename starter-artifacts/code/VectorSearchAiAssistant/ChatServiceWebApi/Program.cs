@@ -22,9 +22,12 @@ namespace ChatServiceWebApi
             builder.Services.AddOptions<SemanticKernelRAGServiceSettings>()
                 .Bind(builder.Configuration.GetSection("MSCosmosDBOpenAI"));
 
+            builder.Services.AddOptions<AMLPromptFlowServiceSettings>()
+                .Bind(builder.Configuration.GetSection("AMLPromptFlowServiceSettings"));
+
             builder.Services.AddSingleton<ICognitiveSearchService, CognitiveSearchService>();
             builder.Services.AddSingleton<ICosmosDbService, CosmosDbService>();
-            builder.Services.AddSingleton<IRAGService, SemanticKernelRAGService>();
+            builder.Services.AddSingleton<IRAGService, AMLPromptFlowService>();
             builder.Services.AddSingleton<IChatService, ChatService>();
 
             // Simple, static system prompt service
