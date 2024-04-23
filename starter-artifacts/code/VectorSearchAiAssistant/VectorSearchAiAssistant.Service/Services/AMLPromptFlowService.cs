@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using VectorSearchAiAssistant.SemanticKernel.Plugins.Memory;
+using VectorSearchAiAssistant.SemanticKernel.Text;
 using VectorSearchAiAssistant.Service.Interfaces;
 using VectorSearchAiAssistant.Service.Models.Chat;
 using VectorSearchAiAssistant.Service.Models.ConfigurationOptions;
@@ -11,7 +13,6 @@ namespace VectorSearchAiAssistant.Service.Services;
 public class AMLPromptFlowService : IRAGService
 {
     readonly VectorMemoryStore _longTermMemory;
-    readonly VectorMemoryStore _shortTermMemory;
     private readonly AMLPromptFlowServiceSettings _settings;
     bool _serviceInitialized = false;
     public bool IsInitialized => _serviceInitialized;
@@ -30,8 +31,7 @@ public class AMLPromptFlowService : IRAGService
     public async Task<(string Completion, string UserPrompt, int UserPromptTokens, int ResponseTokens, float[]? UserPromptEmbedding)> GetResponse(string userPrompt, List<Message> messageHistory)
     {
         var response = await SendRequest(userPrompt, messageHistory);
-        // TODO: Figure out how to make prompt flow return tokens and embeddings
-        return new (response, userPrompt, 0, 0, null);
+        return new (response.chat_output.NormalizeLineEndings(), userPrompt, 0, 0, null);
     }
 
     public async Task RemoveMemory(object item)
@@ -44,7 +44,7 @@ public class AMLPromptFlowService : IRAGService
         throw new NotImplementedException();
     }
 
-    private async Task<string> SendRequest(string userPrompt, List<Message> messageHistory)
+    private async Task<PromptFlowResponse> SendRequest(string userPrompt, List<Message> messageHistory)
     {
         var handler = new HttpClientHandler()
         {
@@ -82,6 +82,6 @@ public class AMLPromptFlowService : IRAGService
 
         var response = await client.PostAsync("", content);//.ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadAsStringAsync();
+        return await response.Content.ReadFromJsonAsync<PromptFlowResponse>();
     }
 }
