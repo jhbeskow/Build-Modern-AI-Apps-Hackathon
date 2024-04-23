@@ -1,0 +1,99 @@
+inputs:
+  chat_history:
+    type: list
+    default:
+    - inputs:
+        chat_input: Hi
+      outputs:
+        chat_output: Hello! How can I assist you today?
+    is_chat_input: false
+    is_chat_history: true
+  chat_input:
+    type: string
+    default: How can I create one using azureml sdk V2?
+    is_chat_input: true
+outputs:
+  completion:
+    type: string
+    reference: ${chat_with_context.output}
+    evaluation_only: false
+    is_chat_output: false
+  fullResponse:
+    type: string
+    reference: ${chat_with_context}
+    evaluation_only: false
+    is_chat_output: true
+  undefined:
+    type: string
+    reference: ""
+    evaluation_only: false
+    is_chat_output: false
+nodes:
+- name: modify_query_with_history
+  type: llm
+  source:
+    type: code
+    path: modify_query_with_history.jinja2
+  inputs:
+    deployment_name: "completions"
+    temperature: 0
+    top_p: 1
+    max_tokens: 1000
+    presence_penalty: 0
+    frequency_penalty: 0
+    chat_history: "${inputs.chat_history}"
+    chat_input: "${inputs.chat_input}"
+  api: chat
+  provider: AzureOpenAI
+  connection: AzureOpenAI
+  module: promptflow.tools.aoai
+  aggregation: false
+- name: lookup
+  type: python
+  source:
+    type: package
+    tool: promptflow_vectordb.tool.common_index_lookup.search
+  inputs:
+    mlindex_content: "embeddings:\n  api_base: https://25906-openai.openai.azure.com/\n  api_type: azure\n  api_version: 2023-07-01-preview\n  batch_size: '1'\n  connection:\n    id: /subscriptions/2f4bfbdd-90dd-4ab3-a1ef-06182a862d15/resourceGroups/rg-hackathon-team-jeer/providers/Microsoft.MachineLearningServices/workspaces/h7zebqy4uyivrw-ml/connections/AzureOpenAI\n  connection_type: workspace_connection\n  deployment: embeddings\n  dimension: 1536\n  kind: open_ai\n  model: text-embedding-ada-002\n  schema_version: '2'\nindex:\n  api_version: 2023-07-01-Preview\n  connection:\n    id: /subscriptions/2f4bfbdd-90dd-4ab3-a1ef-06182a862d15/resourceGroups/rg-hackathon-team-jeer/providers/Microsoft.MachineLearningServices/workspaces/h7zebqy4uyivrw-ml/connections/CognitiveSearch\n  connection_type: workspace_connection\n  endpoint: https://h7zebqy4uyivrw-cog-search.search.windows.net\n  engine: azure-sdk\n  field_mapping:\n    content: content\n    embedding: contentVector\n    metadata: meta_json_string\n  index: datafiles\n  kind: acs\n  semantic_configuration_name: azureml-default\n"
+    queries: "${modify_query_with_history.output}"
+    query_type: "Vector"
+    top_k: 2
+  aggregation: false
+- name: generate_prompt_context
+  type: python
+  source:
+    type: code
+    path: generate_prompt_context.py
+  inputs:
+    search_result: "${lookup.output}"
+  aggregation: false
+- name: chat_with_context
+  type: llm
+  source:
+    type: code
+    path: chat_with_context.jinja2
+  inputs:
+    deployment_name: "completions"
+    temperature: 0
+    top_p: 1
+    max_tokens: 1000
+    presence_penalty: 0
+    frequency_penalty: 0
+    prompt_text: "${Prompt_variants.output}"
+  api: chat
+  provider: AzureOpenAI
+  connection: AzureOpenAI
+  module: promptflow.tools.aoai
+  aggregation: false
+- name: Prompt_variants
+  type: prompt
+  source:
+    type: code
+    path: Prompt_variants.jinja2
+  inputs:
+    chat_history: "${inputs.chat_history}"
+    chat_input: "${inputs.chat_input}"
+    contexts: "${generate_prompt_context.output}"
+  aggregation: false
+environment:
+  python_requirements_txt: requirements.txt
